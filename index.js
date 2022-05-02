@@ -20,13 +20,57 @@ async function run() {
     await client.connect();
     const productCollection = client.db("bikeBangladesh").collection("bike");
 
+
+
+
+
+
+    app.post("/product", async (req, res) => {
+      const newProduct = req.body;
+      console.log("adding new user", newProduct);
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    });
+
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.findOne(query);
+      res.send(result);
+      // console.log(result);
+    });
+
+
+
+
+
+
+
+
+
+    app.delete("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
+      res.send(result);
+    });
+
+
+
+
+
+
+
+
+
+
+
     app.get("/product", async (req, res) => {
       const query = {};
       const cursor = productCollection.find(query);
       const product = await cursor.toArray();
       res.send(product);
     });
-
 
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
@@ -35,14 +79,11 @@ async function run() {
       res.send(result);
       console.log(result);
     });
-
-
-
   } finally {
   }
 }
 
-run().catch(console.log);
+run().catch(console.dir);
 
 app.get("/", (req, res) => {
   res.send("Running my node crud server");
