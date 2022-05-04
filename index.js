@@ -20,11 +20,6 @@ async function run() {
     await client.connect();
     const productCollection = client.db("bikeBangladesh").collection("bike");
 
-
-
-
-
-
     app.post("/product", async (req, res) => {
       const newProduct = req.body;
       console.log("adding new user", newProduct);
@@ -40,30 +35,13 @@ async function run() {
       // console.log(result);
     });
 
-
-
-
-
-
-
-
-
+    //delete//
     app.delete("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await productCollection.deleteOne(query);
       res.send(result);
     });
-
-
-
-
-
-
-
-
-
-
 
     app.get("/product", async (req, res) => {
       const query = {};
