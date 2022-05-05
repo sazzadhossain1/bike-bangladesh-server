@@ -35,6 +35,44 @@ async function run() {
       // console.log(result);
     });
 
+
+
+
+//input plus minus//
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const result = await productCollection.findOne(filter);
+      res.send(result);
+    });
+
+    app.put("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const quantity = req.body;
+      console.log(quantity);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      // // create a document that sets the plot of the movie
+      const updateDoc = {
+        $set: {
+          quantity: quantity.quantity,
+          
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+
+
+
+
+
+
     //delete//
     app.delete("/product/:id", async (req, res) => {
       const id = req.params.id;
