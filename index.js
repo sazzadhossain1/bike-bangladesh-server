@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bplvs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+console.log(uri);
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -35,10 +36,7 @@ async function run() {
       // console.log(result);
     });
 
-
-
-
-//input plus minus//
+    //input plus minus//
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: ObjectId(id) };
@@ -56,7 +54,6 @@ async function run() {
       const updateDoc = {
         $set: {
           quantity: quantity.quantity,
-          
         },
       };
       const result = await productCollection.updateOne(
@@ -66,12 +63,6 @@ async function run() {
       );
       res.send(result);
     });
-
-
-
-
-
-
 
     //delete//
     app.delete("/product/:id", async (req, res) => {
@@ -87,7 +78,7 @@ async function run() {
       const product = await cursor.toArray();
       res.send(product);
     });
-
+    console.log("all routes should be working");
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
