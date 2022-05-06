@@ -93,7 +93,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Running my node crud server");
+  res.send("Server is done");
 });
 
 app.listen(port, () => {
