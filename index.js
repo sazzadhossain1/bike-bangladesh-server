@@ -19,19 +19,20 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const productCollection = client.db("bikeBangladesh").collection("bike");
+    // const productCollection = client.db("bikeBangladesh").collection("bike");
+    const ordersCollection = client.db("bikeBangladesh").collection("order");
 
     app.post("/product", async (req, res) => {
       const newProduct = req.body;
       console.log("adding new user", newProduct);
-      const result = await productCollection.insertOne(newProduct);
+      const result = await ordersCollection.insertOne(newProduct);
       res.send(result);
     });
 
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await productCollection.findOne(query);
+      const result = await ordersCollection.findOne(query);
       res.send(result);
       // console.log(result);
     });
@@ -40,7 +41,7 @@ async function run() {
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: ObjectId(id) };
-      const result = await productCollection.findOne(filter);
+      const result = await ordersCollection.findOne(filter);
       res.send(result);
     });
 
@@ -56,7 +57,7 @@ async function run() {
           quantity: quantity.quantity,
         },
       };
-      const result = await productCollection.updateOne(
+      const result = await ordersCollection.updateOne(
         filter,
         updateDoc,
         options
@@ -68,13 +69,13 @@ async function run() {
     app.delete("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await productCollection.deleteOne(query);
+      const result = await ordersCollection.deleteOne(query);
       res.send(result);
     });
 
     app.get("/product", async (req, res) => {
       const query = {};
-      const cursor = productCollection.find(query);
+      const cursor = ordersCollection.find(query);
       const product = await cursor.toArray();
       res.send(product);
     });
@@ -82,7 +83,7 @@ async function run() {
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await productCollection.findOne(query);
+      const result = await ordersCollection.findOne(query);
       res.send(result);
       console.log(result);
     });
