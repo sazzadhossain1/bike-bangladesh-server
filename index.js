@@ -94,7 +94,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Server do work and running");
+  res.send("Server is done again and again");
 });
 
 app.listen(port, () => {
